@@ -1,4 +1,4 @@
-# project_sonitus
+# Project Sonitus
 
 Project Sonitus is the tentitive name for an implementation of modern music theory. It is largely an exercise in programming, and in learning music theory.
 
