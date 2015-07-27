@@ -2,12 +2,10 @@ __author__ = 'Axel Kingsley'
 # This file defines the standard music theory's relationships
 
 
-# semitones is an 'anonymous' which calculates the tonal ratio
-# given some number of steps.
+""" A function for calculating the tonal ratio of a note given the number of semitones they are apart"""
 semitones = lambda x: 2**(float(x)/12.0)
 
-# intervals describes various names of commonly known tonal relationships
-# they are described in terms of semitones, the base relationship of notes.
+""" Describes various names of commonly known tonal relationships """
 intervals={
     "perfect_unison"   : semitones(0),
     "root"             : semitones(0),
@@ -31,7 +29,7 @@ intervals={
     "perfect_octave"   : semitones(12)
 }
 
-# chord_patterns is a dictionary containing common sets of three-note chords
+""" Dictionary containing common sets of three-note chords """
 chords={
     "major"              : ["root", "major_third", "perfect_fifth"],
     "minor"              : ["root", "minor_third", "perfect_fifth"],
@@ -46,16 +44,17 @@ chords={
     "diminished_seventh" : ["root","minor_third","major_sixth"]
 }
 
+""" Dictionary containing common lists of notes which make up scales """
 scales={
-    "chromatic" : ["root"]*["semitone"]*11,
+    "chromatic" : ["root"]+["semitone"]*11,
 
     "major_pentatonic" : [
         "root",
         "wholetone",
-        "semitone",
-        "semitone",
         "wholetone",
         "semitone",
+        "wholetone",
+        "wholetone",
         "wholetone",
         "semitone"
         ],
@@ -63,16 +62,34 @@ scales={
         "root",
         "wholetone",
         "semitone",
-        "semitone",
+        "wholetone",
         "wholetone",
         "semitone",
         "wholetone",
-        "semitone"
+        "wholetone"
         ]
 }
 
-def makeScale(tone, scale):
-    returnScale=[tone]
-    for each in range(1,len(scale)):
-        returnScale.append(returnScale[-1].applyInterval(scale[each]))
-    return returnScale
+
+if __name__ == "__main__":
+    from tone import Tone
+    base_frequency = 440
+    for each in scales["major_pentatonic"]:
+        print(base_frequency)
+        tone = Tone(base_frequency * intervals[each])
+        base_frequency *= intervals[each]
+        tone.playTone(500)
+
+    base_frequency = 440
+    for each in scales["minor_pentatonic"]:
+        print(base_frequency)
+        tone = Tone(base_frequency * intervals[each])
+        base_frequency *= intervals[each]
+        tone.playTone(500)
+
+    base_frequency = 440
+    for each in chords["major_seventh"]:
+        print(base_frequency)
+        tone = Tone(base_frequency * intervals[each])
+        base_frequency *= intervals[each]
+        tone.playTone(500)
