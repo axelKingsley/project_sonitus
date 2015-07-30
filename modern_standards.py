@@ -73,6 +73,7 @@ scales={
 
 if __name__ == "__main__":
     from tone import Tone
+    import threading
     base_frequency = 440
     for each in scales["major_pentatonic"]:
         print(base_frequency)
@@ -87,9 +88,9 @@ if __name__ == "__main__":
         base_frequency *= intervals[each]
         tone.playTone(500)
 
+    chord = []
     base_frequency = 440
     for each in chords["major_seventh"]:
-        print(base_frequency)
-        tone = Tone(base_frequency * intervals[each])
-        base_frequency *= intervals[each]
-        tone.playTone(500)
+        noteThread = threading.Thread(target=Tone(base_frequency * intervals[each]).playTone(500))
+        chord.append(noteThread)
+    for each in chord: each.start()
